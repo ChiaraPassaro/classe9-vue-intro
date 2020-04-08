@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="container">
+
+      <!-- input v-model -->
+      <div class="row">
+        <div class="col-12">
+          <h1>{{ title }}</h1>
+          <p>{{ message }}</p>
+          <input id="input-text" type="text" placeholder="Scrivi una frase" v-model="title">
+        </div>
+      </div>
+
+      <!-- v-if -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <div class="list-group">
+            <div class="list-group-item list-group-item-action active">
+
+              <!-- per chiamare una funzione ad un evento, nel nostro caso click usiamo @click -->
+              <h2>Cras justo odio <span class="badge badge-secondary" @click="toggleText">X</span></h2>
+
+              <!-- se isActive è true il tag viene stampato -->
+              <p v-if="isActive">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam quo cupiditate
+                officia delectus dolore
+                quia error facere quisquam! Porro, in sequi? Dignissimos, pariatur dolor repudiandae quae et cumque
+                suscipit impedit.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row mt-5">
+        <div class="col-12">
+          <h2>Todo list</h2>
+          <input type="text" placeholder="Inserisci un todo" v-model="newTodo">
+          <button @click="addTodo">Salva</button>
+
+          <ul id="todo-list" class="list-group mt-5">
+
+            <li v-for="(todo, index) in todos" 
+            :class="(todo.done) ? 'done list-group-item' : ' list-group-item'"
+            > 
+            <span v-if="!todo.input" @click="inputActive(index)">{{ todo.text }} </span>
+              <span v-if="todo.input">
+                <input type="text" v-model="todo.text" v-on:keyup.13="todoActive(index)">
+              </span>
+
+              <span class="delete"
+                @click="deleteTodo(index)">X</span> 
+              
+              <span class="badge badge-primary" v-if="todo.done" @click="toggleTodo(index)">V</span>
+              <span class="badge badge-secondary" v-else @click="toggleTodo(index)">X</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="js/script.js"></script>
+</body>
+
+</html>
